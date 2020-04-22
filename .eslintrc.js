@@ -24,6 +24,9 @@ module.exports = {
         code: 300, ignoreUrls: true
       }
     ],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+
+
   },
   settings: {
     'import/resolver': {

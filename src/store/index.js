@@ -5,8 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        navToggle: false,
+    },
+    getters: {
+
     },
     mutations: {
+        changeState(state) {
+            state.navToggle = !state.navToggle;
+        },
     },
     actions: {
     },
