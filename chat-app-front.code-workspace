@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.largeFileOptimizations": false,
+		"eslint.alwaysShowStatus": true,
+		"eslint.autoFixOnSave": true,
+		"eslint.validate": [
+			{
+				"language": "vue",
+				"autoFix": true
+			},
+			{
+				"language": "html",
+				"autoFix": true
+			},
+			{
+				"language": "javascript",
+				"autoFix": true
+			}
+		],
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		}
+	}
+}

@@ -1,7 +1,9 @@
 module.exports = {
   root: true,
   env: {
+    es6: true,
     node: true,
+
   },
   extends: [
     'plugin:vue/essential',
@@ -13,7 +15,22 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    indent: ['error',
+      4
+    ],
     'linebreak-style': 0,
-    'no-shadow': ["error", { "allow": ["state"] }]
+    'max-len': ['error',
+      {
+        code: 300, ignoreUrls: true
+      }
+    ],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.vue'
+        ],
+      },
+    },
   },
 };
