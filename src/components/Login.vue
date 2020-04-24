@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 
 export default {
     name: 'Login',
@@ -73,12 +75,52 @@ export default {
     },
     methods: {
         add() {
-            console.log(`${this.username} ${this.password}`);
-            this.username = '';
-            this.password = '';
-            this.$router.push('home');
+            axios.post('http://localhost:8080/ChatWAR/rest/users/login', {
+                username: this.username,
+                password: this.password,
+            })
+                .then((response) => {
+                    console.log(response);
+                    sessionStorage.setItem('username', this.username);
+                    const vm = this;
+
+                    // eslint-disable-next-line no-undef
+                    // this.conect(this.username);
+                    this.socket = new WebSocket(`ws://localhost:8080/ChatWAR/ws/${this.username}`);
+
+                    this.socket.onopen = function (event) {
+                        console.log(event);
+                    };
+
+
+                    this.socket.onmessage = function (event) {
+                        let temp = [];
+                        temp = event.data.slice(1, -1).split(',');
+                        console.log(temp);
+                        if (temp[0] === 'users') {
+                            vm.addActiveUser(temp.slice(1));
+                        } else {
+                            console.log(event);
+                            vm.addMessage(event.data);
+                        }
+                    };
+
+
+                    this.$router.push('home');
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert('Invalid username or password');
+                });
+        },
+        addMessage(event) {
+            this.$store.commit('addMessage', event);
+        },
+        addActiveUser(event) {
+            this.$store.commit('addUsers', event);
         },
     },
+
 
 };
 </script>

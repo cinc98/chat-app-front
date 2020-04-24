@@ -19,10 +19,14 @@ export default {
         };
     },
 
+
 };
 </script>
 
 
 <style lang="scss">
-
+html {
+  height: 100%;
+  overflow: hidden;
+}
 </style>

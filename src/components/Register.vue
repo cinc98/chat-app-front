@@ -44,10 +44,10 @@
                   ></v-text-field>
 
                 <v-text-field
-                    v-model="password"
-                    id="password"
+                    v-model="confirm_password"
+                    id="confirm_password"
                     label="Confirm Password"
-                    name="confirm-password"
+                    name="confirm_password"
                     prepend-icon="lock"
                     type="password"
                   ></v-text-field>
@@ -71,6 +71,8 @@
 
 <script>
 
+import axios from 'axios';
+
 export default {
     name: 'Register',
     components: {
@@ -79,14 +81,30 @@ export default {
         return {
             username: '',
             password: '',
+            confirm_password: '',
         };
     },
     methods: {
-        add() {
-            console.log(`${this.username} ${this.password}`);
-            this.username = '';
-            this.password = '';
+        add(e) {
+            e.preventDefault();
+            axios.post('http://localhost:8080/ChatWAR/rest/users/register', {
+                username: this.username,
+                password: this.password,
+            })
+                .then((response) => {
+                    console.log(response);
+                    this.username = '';
+                    this.password = '';
+                    this.confirm_password = '';
+
+                    this.$router.push('/');
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert('Username already exists!');
+                });
         },
+
     },
 
 };
