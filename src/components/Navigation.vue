@@ -16,7 +16,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>username</v-list-item-title>
+          <v-list-item-title>{{user}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -25,16 +25,15 @@
       <v-list dense>
 
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
           link
+          @click="toggleDialogClick()"
         >
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>people</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>Registered users</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -46,6 +45,7 @@
     </v-navigation-drawer>
       <Chat/>
       <ActiveUsers/>
+      <registered-users-dialog v-bind:dialogToggle="this.toggleDialogClick" v-bind:show="this.dialogToggle" />
 
   </v-sheet>
 </template>
@@ -54,26 +54,29 @@
 import axios from 'axios';
 import Chat from './Chat.vue';
 import ActiveUsers from './ActiveUsers.vue';
-
+import RegisteredUsersDialog from './RegisteredUsersDialog.vue';
 
 export default {
     data() {
         return {
-            items: [
-                { title: 'Home', icon: 'dashboard' },
-                { title: 'About', icon: 'question_answer' },
-            ],
+            dialogToggle: false,
+
         };
     },
     components: {
         Chat,
         ActiveUsers,
+        RegisteredUsersDialog,
+
     },
     methods: {
         loging(e) {
             if (e === false) {
                 this.$store.commit('changeState');
             }
+        },
+        toggleDialogClick() {
+            this.dialogToggle = !this.dialogToggle;
         },
         logout(e) {
             e.preventDefault();
@@ -83,6 +86,8 @@ export default {
                     this.$store.commit('changeState');
                     this.$store.commit('removeActiveUser', sessionStorage.getItem('username'));
                     this.$store.commit('deleteMessages');
+                    this.$store.commit('removeRegisteredUsers');
+
                     sessionStorage.removeItem('username');
 
                     this.$router.push('/');
@@ -96,6 +101,10 @@ export default {
         drawer() {
             return this.$store.state.navToggle;
         },
+        user() {
+            return sessionStorage.getItem('username');
+        },
+
     },
 };
 </script>

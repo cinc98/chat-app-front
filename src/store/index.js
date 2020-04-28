@@ -8,6 +8,7 @@ export default new Vuex.Store({
         navToggle: false,
         message: [],
         activeUsers: [],
+        registeredUsers: [],
     },
     getters: {
 
@@ -24,6 +25,11 @@ export default new Vuex.Store({
                 state.message.push(JSON.stringify(msg));
             });
         },
+        fetchRegisteredUsers(state, users) {
+            users.forEach((user) => {
+                state.registeredUsers.push(user);
+            });
+        },
         deleteMessages(state) {
             state.message.length = 0;
         },
@@ -35,6 +41,9 @@ export default new Vuex.Store({
         },
         removeActiveUser(state, username) {
             state.activeUsers = state.activeUsers.filter((user) => user !== username);
+        },
+        removeRegisteredUsers(state) {
+            state.registeredUsers.length = 0;
         },
     },
     actions: {
