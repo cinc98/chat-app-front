@@ -22,7 +22,7 @@ export default new Vuex.Store({
         addUsers(state, users) {
             state.activeUsers.length = 0;
             users.forEach((element) => {
-                state.activeUsers.push(element);
+                state.activeUsers.push(element.slice(1));
             });
         },
         removeActiveUser(state, username) {

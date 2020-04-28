@@ -96,7 +96,6 @@ export default {
                     this.socket.onmessage = function (event) {
                         let temp = [];
                         temp = event.data.slice(1, -1).split(',');
-                        console.log(temp);
                         if (temp[0] === 'users') {
                             vm.addActiveUser(temp.slice(1));
                         } else {
