@@ -82,6 +82,7 @@ export default {
                     console.log(response);
                     this.$store.commit('changeState');
                     this.$store.commit('removeActiveUser', sessionStorage.getItem('username'));
+                    this.$store.commit('deleteMessages');
                     sessionStorage.removeItem('username');
 
                     this.$router.push('/');

@@ -19,6 +19,14 @@ export default new Vuex.Store({
         addMessage(state, msg) {
             state.message.push(msg);
         },
+        addMessages(state, messages) {
+            messages.forEach((msg) => {
+                state.message.push(JSON.stringify(msg));
+            });
+        },
+        deleteMessages(state) {
+            state.message.length = 0;
+        },
         addUsers(state, users) {
             state.activeUsers.length = 0;
             users.forEach((element) => {
@@ -34,25 +42,4 @@ export default new Vuex.Store({
     modules: {
     },
 
-});
-
-Vue.mixin({
-    data() {
-        return {
-            socket: '',
-        };
-    },
-    methods: {
-        conect(username) {
-            this.socket = new WebSocket(`ws://localhost:8080/ChatWAR/ws/${username}`);
-            this.socket.onopen = function (event) {
-                console.log(event);
-            };
-            this.socket.onmessage = function (event) {
-                console.log(event);
-                this.addMessageToStore(event);
-            };
-        },
-
-    },
 });

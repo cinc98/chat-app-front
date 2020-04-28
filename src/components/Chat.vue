@@ -80,6 +80,17 @@ export default {
         },
 
     },
+    created() {
+        axios.get(`http://localhost:8080/ChatWAR/rest/messages/${sessionStorage.getItem('username')}`)
+            .then((response) => {
+                console.log(response);
+                this.$store.commit('addMessages', response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('error get messages');
+            });
+    },
 };
 </script>
 
